@@ -3,13 +3,13 @@ package batching
 import (
 	"github.com/deqinganz/batch-processor"
 	. "github.com/deqinganz/batching-api/api"
+	"github.com/deqinganz/micro-batching/internal/config"
+	"github.com/deqinganz/micro-batching/internal/service"
+	"github.com/deqinganz/micro-batching/internal/service/preprocess"
+	"github.com/deqinganz/micro-batching/internal/service/preprocess/processors"
 	"github.com/go-co-op/gocron/v2"
 	"github.com/google/uuid"
 	"log"
-	"micro-batching/internal/config"
-	"micro-batching/internal/service"
-	"micro-batching/internal/service/preprocess"
-	"micro-batching/internal/service/preprocess/processors"
 	"time"
 )
 

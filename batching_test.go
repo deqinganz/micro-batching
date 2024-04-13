@@ -2,8 +2,8 @@ package batching
 
 import (
 	. "github.com/deqinganz/batching-api/api"
+	"github.com/deqinganz/micro-batching/internal/config"
 	"github.com/stretchr/testify/assert"
-	"micro-batching/internal/config"
 	"testing"
 )
 

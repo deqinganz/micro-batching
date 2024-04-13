@@ -2,8 +2,8 @@ package preprocess
 
 import (
 	. "github.com/deqinganz/batching-api/api"
+	"github.com/deqinganz/micro-batching/internal/service/preprocess/processors"
 	"github.com/stretchr/testify/assert"
-	"micro-batching/internal/service/preprocess/processors"
 	"testing"
 )
 
