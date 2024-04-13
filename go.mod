@@ -1,4 +1,4 @@
-module micro-batching
+module github.com/deqinganz/micro-batching
 
 go 1.21.0
 
