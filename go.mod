@@ -5,7 +5,6 @@ go 1.21.0
 require (
 	github.com/deqinganz/batch-processor v0.0.0-20240413161956-573fb38e53d6
 	github.com/deqinganz/batching-api v0.0.0-20240413160619-e47c9b747e6c
-	github.com/deqinganz/lib-test v0.0.0-20240413153731-ed2fa37c670b
 	github.com/go-co-op/gocron/v2 v2.2.9
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.9.0
