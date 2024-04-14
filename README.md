@@ -1,56 +1,29 @@
-# Micro-Batching Service
+# Micro-Batching Library
 
-## Build and Run
+This is a micro-batching library that processes jobs in batches.
 
-```bash
-make codegen  # generate code from openapi.yaml
-go build .
-go run .
-```
-
-## Usage
-
-Configurations can be set in `config.json` file, can also be updated via endpoints when the program runs
-
-### Set Frequency
-
-To call BatchProcessor every 5 seconds via the `/batch-frequency` endpoint:
-
-```bash
-curl http://localhost:8080/batch-frequency -H "Content-Type:application/json" -d '{"frequency":10}'
-```
-
-### Get Frequency
-
-To get the current frequency of BatchProcessor:
-
-```bash
-curl http://localhost:8080/batch-frequency
-```
-
-### Set Batch Size
-
-To set the batch size of BatchProcessor via the `/batch-size` endpoint:
-
-```bash
-curl http://localhost:8080/batch-size -H "Content-Type:application/json" -d '{"batch-size":10}'
-```
-
-### Get Batch Size
-
-To get the current batch size of BatchProcessor:
-
-```bash
-curl http://localhost:8080/batch-size
-```
-
-### Add Job to Batching Service
-
+It takes a job and put it in the queue. It calls BatchProcessor by the frequency and batch size set by the user.
 
 ## Design
 
+### Queue
+
+The queue is a FIFO queue implemented using a slice. The time complexity of `Enqueue()` is O(1), amortized constant time. The time complexity of `Dequeue(k)` is O(N) because it removes elements from the beginning of a slice.
+
+There are several other possible ways to implement this queue:
+- Using a linked list
+  - This would make `Dequeue(k)` O(k) but both `Enqueue()` and `Dequeue()` are likely slower than a slice. Probably only suitable when the `Dequeue(k)` is called frequently.
+- Using a ring buffer
+  - `container/ring` in Go provides a ring buffer implementation. It will have better performance than a slice because it doesn't need to resize the buffer or move elements. But in this implementation, the size of the ring is fixed. If the buffer is full, we need to decide whether to drop the new job or to remove the oldest job.
+- Implementing a ring buffer by a slice with pointers to the head and tail
+  - `Dequeue(k)` will have better performance because it doesn't need to move elements. It will be more complex to implement and maintain.
+
+When performance comes to play, we should consider the trade-offs between these possible implementations.
+
 ### Preprocessing
 
-This service can do an optional preprocessing step before sending the data to BatchProcessor. The preprocessing is disabled by default, can be turned on via `preprocess` endpoint. The preprocessing takes a list of jobs, and returns processed jobs. The idea is to allow possible filtering or merging to reduce the number of jobs to be processed by BatchProcessor.
+## Limitations
 
-For example, 
+### Multithreading
+
+This library is not thread-safe, `Enqueue()` and `Dequeue()` can cause race condition. If you want to use this library in a multi-threaded environment, you need to add a lock to the queue.
