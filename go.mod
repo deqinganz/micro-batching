@@ -3,7 +3,7 @@ module github.com/deqinganz/micro-batching
 go 1.21.0
 
 require (
-	github.com/deqinganz/batch-processor v0.0.0-20240413161956-573fb38e53d6
+	github.com/deqinganz/batch-processor v0.0.0-20240414020442-b6ce9bb640a5
 	github.com/deqinganz/batching-api v0.0.0-20240413160619-e47c9b747e6c
 	github.com/go-co-op/gocron/v2 v2.2.9
 	github.com/google/uuid v1.6.0

@@ -18,6 +18,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/deqinganz/batch-processor v0.0.0-20240413161956-573fb38e53d6 h1:OK0v39QUnpAGL4pygH4q/rTslBP5ewGrCnlYAacWrCA=
 github.com/deqinganz/batch-processor v0.0.0-20240413161956-573fb38e53d6/go.mod h1:OoQoWYMab7a8IADkRUhz+Ls0wFwNqLQ2KDDU27hzfIY=
+github.com/deqinganz/batch-processor v0.0.0-20240414020442-b6ce9bb640a5 h1:ntGH3zampuGe7WraJAzXB6nN5KS/+49pSc4t0NcwByM=
+github.com/deqinganz/batch-processor v0.0.0-20240414020442-b6ce9bb640a5/go.mod h1:OoQoWYMab7a8IADkRUhz+Ls0wFwNqLQ2KDDU27hzfIY=
 github.com/deqinganz/batching-api v0.0.0-20240413160619-e47c9b747e6c h1:6Age0d5bVdCQyqZEDDb/KI0A83wUEcLyOcBvwzRB7tw=
 github.com/deqinganz/batching-api v0.0.0-20240413160619-e47c9b747e6c/go.mod h1:h10pQs5gmAn/gGM7m+6vU33oQyh6UsutCnoFFYaGi4M=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=

@@ -151,5 +151,5 @@ func (b *Batching) Post() {
 
 	jobs := b.queue.Dequeue(b.config.BatchSize)
 
-	b.batchProcessor.Process(jobs)
+	go b.batchProcessor.ProcessAndSleep(jobs, 20)
 }
