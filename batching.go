@@ -10,6 +10,7 @@ import (
 	"github.com/go-co-op/gocron/v2"
 	"github.com/google/uuid"
 	"log"
+	"sync"
 	"time"
 )
 
@@ -19,6 +20,7 @@ type Batching struct {
 	batchProcessor batchprocessor.BatchProcessor
 	scheduler      gocron.Scheduler
 	preProcess     *preprocess.JobProcess
+	batchesWg      sync.WaitGroup
 }
 
 func NewBatching() (Batching, error) {
@@ -69,6 +71,10 @@ func (b *Batching) Start() {
 
 // Restart stops the scheduler and starts it again
 func (b *Batching) Restart() {
+	if b.scheduler == nil {
+		return
+	}
+
 	err := b.scheduler.Shutdown()
 	if err != nil {
 		log.Fatal("Failed to shutdown scheduler")
@@ -122,6 +128,7 @@ func (b *Batching) SetBatchSize(batchSize BatchSize) {
 	b.config.BatchSize = batchSize.BatchSize
 }
 
+// SetPreProcess adds or removes preprocessing to the batching
 func (b *Batching) SetPreProcess(on bool) {
 	if on {
 		if b.preProcess != nil {
@@ -138,6 +145,7 @@ func (b *Batching) SetPreProcess(on bool) {
 	}
 }
 
+// Post prepares the batch of jobs and starts a new goroutine to process it
 func (b *Batching) Post() {
 	if b.queue.Size() == 0 {
 		log.Print("No jobs to process")
@@ -151,5 +159,26 @@ func (b *Batching) Post() {
 
 	jobs := b.queue.Dequeue(b.config.BatchSize)
 
-	go b.batchProcessor.ProcessAndSleep(jobs, 20)
+	b.batchesWg.Add(1)
+	go b.post(jobs, &b.batchesWg)
+}
+
+// post processes the batch of jobs and finishes the wait group
+func (b *Batching) post(jobs []Job, wg *sync.WaitGroup) {
+	defer wg.Done()
+	b.batchProcessor.ProcessAndSleep(jobs, 5)
+	log.Print("Batch processed")
+}
+
+// ShutDown stops the scheduler and waits for all batches to finish
+func (b *Batching) ShutDown() error {
+	if b.scheduler != nil {
+		err := b.scheduler.Shutdown()
+		if err != nil {
+			return err
+		}
+	}
+
+	b.batchesWg.Wait()
+	return nil
 }

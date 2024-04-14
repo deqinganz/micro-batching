@@ -92,4 +92,7 @@ func TestPost(t *testing.T) {
 
 	b.Post()
 	assert.Empty(t, 0, b.queue.Size())
+
+	err = b.ShutDown()
+	assert.NoError(t, err)
 }
